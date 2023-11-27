@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@fontsource/be-vietnam-pro": "^5.0.17",
+    "@uidotdev/usehooks": "^2.4.1",
+    "jotai": "^2.6.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "swr": "^2.2.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
