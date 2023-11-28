@@ -15,7 +15,7 @@ export function Body() {
 
     const { data } = useSWR<GithubRepositoryResponse[]>(
         selectedRepository
-            ? `https://api.github.com/users/${selectedRepository.name}/repos?per_page=4`
+            ? `https://api.github.com/users/${selectedRepository.login}/repos?per_page=4`
             : null,
         fetcher,
         {}
