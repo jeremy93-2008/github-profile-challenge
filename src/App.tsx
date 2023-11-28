@@ -3,7 +3,7 @@ import { Body } from "./templates/Body";
 
 export function App() {
   return (
-    <main className="flex flex-col h-screen bg-darkGrayGithub">
+    <main className="flex flex-col min-h-screen bg-darkGrayGithub">
       <Header />
       <Body />
     </main>
