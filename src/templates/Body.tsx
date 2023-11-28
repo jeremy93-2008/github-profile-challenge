@@ -1,5 +1,4 @@
 import useSWR from 'swr'
-import { useEffect, useRef } from 'react'
 import { useAtomValue } from 'jotai'
 import { formatDistance } from 'date-fns'
 import { fetcher } from '../services/fetcher'
@@ -14,7 +13,7 @@ import { GithubRepositoryResponse } from '../types/github.type'
 export function Body() {
     const selectedRepository = useAtomValue(selectedRepositoryAtom)
 
-    const { data, error, isLoading } = useSWR<GithubRepositoryResponse[]>(
+    const { data } = useSWR<GithubRepositoryResponse[]>(
         selectedRepository
             ? `https://api.github.com/users/${selectedRepository.name}/repos?per_page=4`
             : null,

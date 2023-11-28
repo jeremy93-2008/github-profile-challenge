@@ -15,7 +15,7 @@ export function Search() {
     const [search, setSearch] = useState('')
     const debouncedSearch = useDebounce(search, 500)
 
-    const { data, error, isLoading } = useSWR<GithubUserResponse>(
+    const { data } = useSWR<GithubUserResponse>(
         debouncedSearch
             ? `https://api.github.com/users/${debouncedSearch}`
             : null,
