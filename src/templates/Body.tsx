@@ -120,7 +120,7 @@ export function Body() {
                         ))}
                 </section>
                 <section className="flex justify-center mt-8 mb-14">
-                    <a target='_blank' href={`https://github.com/orgs/${selectedRepository?.name}/repositories`}>
+                    <a target='_blank' href={`https://github.com/orgs/${selectedRepository?.login}/repositories`}>
                         <button className="text-whiteGithub py-2 px-4 rounded-lg">
                             View all repositories
                         </button>
