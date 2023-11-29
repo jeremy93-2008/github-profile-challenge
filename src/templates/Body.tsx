@@ -77,7 +77,7 @@ export function Body() {
                     {data &&
                         data.length > 0 &&
                         data.map((repo) => (
-                            <a href={`https://github.com/${selectedRepository?.name}/${repo.name}`} target='_blank'>
+                            <a href={`https://github.com/${selectedRepository?.login}/${repo.name}`} target='_blank'>
                                 <section className="github-profile__body--content--repository flex flex-col bg-gradient-to-r from-darkBlueGithub to-blueGithub text-whiteGithub rounded-lg pt-4 px-4">
                                     <h1>{repo.name}</h1>
                                     <p className="flex-1 mt-2 text-sm text-whiteGithub">
