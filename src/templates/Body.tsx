@@ -13,13 +13,18 @@ import { GithubRepositoryResponse } from '../types/github.type'
 export function Body() {
     const selectedRepository = useAtomValue(selectedRepositoryAtom)
 
-    const { data } = useSWR<GithubRepositoryResponse[]>(
+    const { data, isLoading } = useSWR<GithubRepositoryResponse[]>(
         selectedRepository
             ? `https://api.github.com/users/${selectedRepository.login}/repos?per_page=4`
             : null,
         fetcher,
         {}
     )
+
+    const urlAllRepositories =
+        selectedRepository?.type === 'Organization'
+            ? `https://github.com/orgs/${selectedRepository?.login}/repositories`
+            : `https://github.com/${selectedRepository?.login}?tab=repositories`
 
     return (
         <section
@@ -34,7 +39,7 @@ export function Body() {
                         src={selectedRepository?.avatar_url}
                     />
                 </article>
-                <section className='flex flex-col gap-1 lg:flex-row lg:gap-4'>
+                <section className="flex flex-col gap-1 lg:flex-row lg:gap-4">
                     <article className="github-profile__body--header--info flex items-center bg-darkBlueGithub text-whiteGithub mt-2 h-12 py-2 px-5 w-fit rounded-lg">
                         <span className="text-sm text-lightGrayGithub mr-3">
                             Followers
@@ -60,25 +65,32 @@ export function Body() {
                         </span>
                     </article>
                 </section>
-
             </section>
-            <section className="github-profile__body--title mt-4 flex mx-auto lg:mx-0 justify-center">
-                <section className="w-[60vw] lg:w-[795px]">
-                    <h1 className="text-xl text-whiteGithub font-medium">
-                        {selectedRepository?.name}
-                    </h1>
-                    <p className="text-md text-lightGrayGithub">
-                        {selectedRepository?.bio}
-                    </p>
-                </section>
-            </section>
-            <section className="github-profile__body--content mt-8 lg:ml-12 flex flex-col items-center">
-                <section className="grid grid-cols-1 lg:grid-cols-2 grid-rows-[auto-fit_minmax(900px,_1fr)_100px] gap-10 lg:gap-4 lg:w-[855px]">
+            <section className="github-profile__body--content mt-5 lg:mt-4 lg:ml-12 flex flex-col items-center">
+                <section className="grid grid-cols-1 lg:grid-cols-2 grid-rows-[auto-fit_minmax(900px,_1fr)_100px] gap-6 lg:gap-4 lg:w-[855px]">
+                    <section className="lg:col-span-2 lg:mb-5 w-[60vw] lg:w-[795px]">
+                        <h1 className="text-xl text-whiteGithub font-medium">
+                            {selectedRepository?.name}
+                        </h1>
+                        <p className="text-md text-gray-500">
+                            {selectedRepository?.bio}
+                        </p>
+                    </section>
+                    {isLoading && (
+                        <section className="lg:col-span-2 lg:mb-5 w-[60vw] lg:w-[795px]">
+                            <h1 className="flex justify-center text-xl text-whiteGithub font-medium">
+                                Loading...
+                            </h1>
+                        </section>
+                    )}
                     {data &&
                         data.length > 0 &&
                         data.map((repo) => (
-                            <a href={`https://github.com/${selectedRepository?.login}/${repo.name}`} target='_blank'>
-                                <section className="github-profile__body--content--repository flex flex-col bg-gradient-to-r from-darkBlueGithub to-blueGithub text-whiteGithub rounded-lg pt-4 px-4">
+                            <a
+                                href={`https://github.com/${selectedRepository?.login}/${repo.name}`}
+                                target="_blank"
+                            >
+                                <section className="github-profile__body--content--repository flex flex-col bg-gradient-to-r from-darkBlueGithub to-blueGithub text-whiteGithub rounded-lg min-w-0 pt-4 px-4">
                                     <h1>{repo.name}</h1>
                                     <p className="flex-1 mt-2 text-sm text-whiteGithub">
                                         {repo.description}
@@ -120,7 +132,7 @@ export function Body() {
                         ))}
                 </section>
                 <section className="flex justify-center mt-8 mb-14">
-                    <a target='_blank' href={`https://github.com/orgs/${selectedRepository?.login}/repositories`}>
+                    <a target="_blank" href={urlAllRepositories}>
                         <button className="text-whiteGithub py-2 px-4 rounded-lg">
                             View all repositories
                         </button>
